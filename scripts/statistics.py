@@ -31,8 +31,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-import os as _os
-sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', 'configs'))
+sys.path.insert(0, r'.\configs')
 from paths import P2_RESULTS, EXT_VAL_ROOT
 
 N_BOOT = 10000
@@ -293,11 +292,15 @@ def external_dmft_analysis(ai_preds_json, rater_a_xlsx, rater_b_xlsx, out_dir):
     ])
 
     a_df = pd.read_excel(rater_a_xlsx, sheet_name='annotations')[
-        ['image_id', 'D', 'M', 'F', 'DMFT', 'excluded']]
+        ['image_id', 'D', 'M', 'F', 'excluded']]
     b_df = pd.read_excel(rater_b_xlsx, sheet_name='annotations')[
-        ['image_id', 'D', 'M', 'F', 'DMFT', 'excluded']]
-    a_df.columns = ['image_id', 'A_D', 'A_M', 'A_F', 'A_DMFT', 'A_excluded']
-    b_df.columns = ['image_id', 'B_D', 'B_M', 'B_F', 'B_DMFT', 'B_excluded']
+        ['image_id', 'D', 'M', 'F', 'excluded']]
+    a_df.columns = ['image_id', 'A_D', 'A_M', 'A_F', 'A_excluded']
+    b_df.columns = ['image_id', 'B_D', 'B_M', 'B_F', 'B_excluded']
+    # DMFT is recomputed from the D/M/F components (WHO definition) rather than
+    # read from any spreadsheet 'DMFT' column, which is not always reliable.
+    for x, d_ in (('A', a_df), ('B', b_df)):
+        d_[f'{x}_DMFT'] = d_[f'{x}_D'] + d_[f'{x}_M'] + d_[f'{x}_F']
 
     df = ai_df.merge(a_df, on='image_id', how='inner').merge(b_df, on='image_id', how='inner')
     # exclude OPGs marked as uninterpretable by either rater
