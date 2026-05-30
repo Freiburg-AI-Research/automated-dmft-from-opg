@@ -1,0 +1,11 @@
+# Ultralytics YOLO data config for the DENTEX disease_all dataset
+# Re-uses the YOLO export already prepared in Project 1.
+path: ${DENTEX_ROOT}/yolo/disease_all  # set DENTEX_ROOT
+train: images/train2017
+val:   images/val2017
+
+nc: 3
+names:
+  0: Healthy
+  1: Caries
+  2: Filled

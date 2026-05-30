@@ -1,0 +1,23 @@
+# Core
+numpy>=1.24
+pandas>=2.0
+scipy>=1.10
+matplotlib>=3.7
+pillow>=10.0
+opencv-python>=4.8
+
+# Deep learning
+torch>=2.0
+torchvision>=0.15
+ultralytics>=8.4
+
+# I/O
+openpyxl>=3.1
+pyyaml>=6.0
+
+# Optional: TensorBoard log parsing (used by training-curve scripts)
+tbparse>=0.0.9
+tensorboard>=2.13
+
+# Statistical extras
+pycocotools>=2.0.7

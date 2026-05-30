@@ -1,0 +1,11 @@
+# Clean 80/20 image-wise split of the DENTEX disease_all set (seed 42).
+# Replaces dentex_disease.yaml, whose val2017 was a copy of train2017 (leakage).
+path: ${DENTEX_ROOT}/yolo/disease_all  # set DENTEX_ROOT
+train: train_split.txt
+val:   val_split.txt
+
+nc: 3
+names:
+  0: Healthy
+  1: Caries
+  2: Filled
